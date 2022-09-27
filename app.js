@@ -1,0 +1,131 @@
+'use strict';
+console.log('Hello');
+
+
+//!! DEFINED VARIABLES//
+//**Global**
+let votes = 25;
+
+let itemStorage = [];
+//**DOM DEFINER**//
+
+let itemDisplay = document.getElementById('itemDisplay');
+let img1 = document.getElementById('img1');
+let img2 = document.getElementById('img2');
+let img3 = document.getElementById('img3');
+let resultsBtn = document.getElementById('itempick');
+
+//!! RENDER LOGIC!!//
+
+function itemrender(){
+  console.log('test');
+  let img1grab = randomizer();
+  let img2grab = randomizer();
+  let img3grab = randomizer();
+
+  while (img1grab === img2grab || img1grab === img3grab || img2grab === img3grab){
+    img2grab = randomizer();
+    img3grab = randomizer();
+  }
+  //Image Selector For Display
+  img1.src = itemStorage[img1grab].img;
+  img2.src = itemStorage[img2grab].img;
+  img3.src = itemStorage[img3grab].img;
+  // Item View Counter//
+  itemStorage[img1grab].views++;
+  itemStorage[img2grab].views++;
+  itemStorage[img3grab].views++;
+
+  //Alt Name for Accessibility//
+  img1.alt = itemStorage[img1grab].name;
+  img2.alt = itemStorage[img2grab].name;
+  img3.alt = itemStorage[img3grab].name;
+
+}
+
+//!!COMPUTATIONAL LOGIC SECTION//
+
+//**Randomizer**//
+
+function randomizer() {
+  return Math.floor(Math.random() * itemStorage.length);
+}
+
+// **Object Maker**//
+
+function Item(name, fileExtension = 'jpg') {
+
+  this.name = name;
+  this.img = `img/${name}.${fileExtension}`;
+  this.views = 0;
+  this.clicks = 0;
+  itemStorage.push(this);
+}
+
+
+
+
+//!!Clicks & Counter Logic//
+
+function clicklogic(event) {
+  let imgselect = event.target.alt;
+
+  for (let i = 0; i < itemStorage.length; i++) {
+    if (itemStorage[i].name === imgselect) {
+      itemStorage[i].clicks++;
+    }
+  }
+  votes--;
+
+  itemrender();
+  if (votes === 0) {
+    itemDisplay.removeEventListener('click', clicklogic);
+    resultslogic();
+  }
+}
+
+
+//**Item Creator**//
+
+new Item('bag');
+new Item('banana');
+new Item('bathroom');
+new Item('boots');
+new Item('breakfast');
+new Item('bubblegum');
+new Item('chair');
+new Item('cthulhu');
+new Item('dog-duck');
+new Item('dragon');
+new Item('pen');
+new Item('pet-sweep');
+new Item('scissors');
+new Item('shark');
+new Item('sweep', 'png');
+new Item('tauntaun');
+new Item('unicorn');
+new Item('water-can');
+new Item('wine-glass');
+
+// !!Results Logic//
+
+function resultslogic() {
+  if (votes === 0); {
+    for (let i = 0; i < itemStorage.length; i++){
+      let LiLM = document.createElement('li');
+      LiLM.textContent = `${itemStorage[i].name} was viewed: ${itemStorage[i].views} and clicked: ${itemStorage[i].clicks}`;
+      resultsBtn.appendChild(LiLM);
+    }
+    resultsBtn.removeEventListener('click',resultslogic);
+  }
+}
+
+
+//!!INTIALIZE
+
+
+itemrender();
+
+
+itemDisplay.addEventListener('click', clicklogic);
+resultsBtn.addEventListener('click', resultslogic);
