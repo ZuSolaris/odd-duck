@@ -15,7 +15,13 @@ let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 let resultsBtn = document.getElementById('itempick');
 
+
+
+
 //!! RENDER LOGIC!!//
+
+
+//!REPEAT PREVENTION LOGIC//
 
 function itemrender() {
   console.log('test');
@@ -47,8 +53,10 @@ function itemrender() {
   img3.alt = itemStorage[img3grab].name;
 
 }
-//!REPEAT PREVENTION LOGIC//
 
+//! LOCAL Storage Continued//
+let retrieveddata = localStorage.getItem('');
+console.log('Data Retrieved:', retrieveddata);
 
 
 
@@ -141,40 +149,69 @@ function clicklogic(event) {
   for (let i = 0; i < itemStorage.length; i++) {
     if (itemStorage[i].name === imgselect) {
       itemStorage[i].clicks++;
+      votes--;
+      finalRes();
+      itemrender();
     }
   }
-  votes--;
-
-  itemrender();
+}
+function finalRes() {
   if (votes === 0) {
     itemDisplay.removeEventListener('click', clicklogic);
     // resultslogic();
     chartRender();
+
+    //!Local Data Storage Starts Here//
+    let stringObjects = JSON.stringify(itemStorage);
+
+    console.log('strings >>', stringObjects);
+
+    localStorage.setItem('storedObjects', stringObjects);
   }
 }
 
+//!LOCAL DATA EXTRACTION//
+// etrObj stands for Extracted Objects//
+let etrObj = localStorage.getItem('storedObjects');
+console.log('Extracted Objects:', etrObj);
 
-//**Item Creator**//
+//Data Recall//
 
-new Item('bag');
-new Item('banana');
-new Item('bathroom');
-new Item('boots');
-new Item('breakfast');
-new Item('bubblegum');
-new Item('chair');
-new Item('cthulhu');
-new Item('dog-duck');
-new Item('dragon');
-new Item('pen');
-new Item('pet-sweep');
-new Item('scissors');
-new Item('shark');
-new Item('sweep', 'png');
-new Item('tauntaun');
-new Item('unicorn');
-new Item('water-can');
-new Item('wine-glass');
+let recallObj = JSON.parse(etrObj);
+
+console.log('Recalled Objects:', recallObj);
+
+
+//**Item Creator with Data filter**//
+
+
+
+if (etrObj) {
+  itemStorage = recallObj;
+}
+
+else {
+
+  new Item('bag');
+  new Item('banana');
+  new Item('bathroom');
+  new Item('boots');
+  new Item('breakfast');
+  new Item('bubblegum');
+  new Item('chair');
+  new Item('cthulhu');
+  new Item('dog-duck');
+  new Item('dragon');
+  new Item('pen');
+  new Item('pet-sweep');
+  new Item('scissors');
+  new Item('shark');
+  new Item('sweep', 'png');
+  new Item('tauntaun');
+  new Item('unicorn');
+  new Item('water-can');
+  new Item('wine-glass');
+}
 
 // !!Results Logic//
 
@@ -195,6 +232,4 @@ new Item('wine-glass');
 
 itemrender();
 
-
 itemDisplay.addEventListener('click', clicklogic);
-resultsBtn.addEventListener('click', resultslogic);
