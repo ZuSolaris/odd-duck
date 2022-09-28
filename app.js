@@ -54,9 +54,9 @@ function itemrender() {
 
 }
 
-//! LOCAL Storage Contiuned//
+//! LOCAL Storage Continued//
 let retrieveddata = localStorage.getItem('');
-console.log();
+console.log('Data Retrieved:', retrieveddata);
 
 
 
@@ -149,13 +149,13 @@ function clicklogic(event) {
   for (let i = 0; i < itemStorage.length; i++) {
     if (itemStorage[i].name === imgselect) {
       itemStorage[i].clicks++;
-  
-  votes--;
-
-  itemrender();
+      votes--;
+      finalRes();
+      itemrender();
     }
   }
-  function finalRes(){
+}
+function finalRes() {
   if (votes === 0) {
     itemDisplay.removeEventListener('click', clicklogic);
     // resultslogic();
@@ -166,38 +166,52 @@ function clicklogic(event) {
 
     console.log('strings >>', stringObjects);
 
-    localStorage.setItem('my object', stringObjects);
+    localStorage.setItem('storedObjects', stringObjects);
   }
 }
 
+//!LOCAL DATA EXTRACTION//
+// etrObj stands for Extracted Objects//
+let etrObj = localStorage.getItem('storedObjects');
+console.log('Extracted Objects:', etrObj);
+
+//Data Recall//
+
+let recallObj = JSON.parse(etrObj);
+
+console.log('Recalled Objects:', recallObj);
+
+
+//**Item Creator with Data filter**//
 
 
 
+if (etrObj) {
+  itemStorage = recallObj;
+}
 
+else {
 
-
-
-//**Item Creator**//
-
-new Item('bag');
-new Item('banana');
-new Item('bathroom');
-new Item('boots');
-new Item('breakfast');
-new Item('bubblegum');
-new Item('chair');
-new Item('cthulhu');
-new Item('dog-duck');
-new Item('dragon');
-new Item('pen');
-new Item('pet-sweep');
-new Item('scissors');
-new Item('shark');
-new Item('sweep', 'png');
-new Item('tauntaun');
-new Item('unicorn');
-new Item('water-can');
-new Item('wine-glass');
+  new Item('bag');
+  new Item('banana');
+  new Item('bathroom');
+  new Item('boots');
+  new Item('breakfast');
+  new Item('bubblegum');
+  new Item('chair');
+  new Item('cthulhu');
+  new Item('dog-duck');
+  new Item('dragon');
+  new Item('pen');
+  new Item('pet-sweep');
+  new Item('scissors');
+  new Item('shark');
+  new Item('sweep', 'png');
+  new Item('tauntaun');
+  new Item('unicorn');
+  new Item('water-can');
+  new Item('wine-glass');
+}
 
 // !!Results Logic//
 
@@ -218,7 +232,4 @@ new Item('wine-glass');
 
 itemrender();
 
-
 itemDisplay.addEventListener('click', clicklogic);
-resultsBtn.addEventListener('click', finalRes);
-
