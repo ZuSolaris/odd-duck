@@ -5,8 +5,8 @@ console.log('Hello');
 //!! DEFINED VARIABLES//
 //**Global**
 let votes = 25;
-
 let itemStorage = [];
+let indexArray = [];
 //**DOM DEFINER**//
 
 let itemDisplay = document.getElementById('itemDisplay');
@@ -17,16 +17,21 @@ let resultsBtn = document.getElementById('itempick');
 
 //!! RENDER LOGIC!!//
 
-function itemrender(){
+function itemrender() {
   console.log('test');
-  let img1grab = randomizer();
-  let img2grab = randomizer();
-  let img3grab = randomizer();
 
-  while (img1grab === img2grab || img1grab === img3grab || img2grab === img3grab){
-    img2grab = randomizer();
-    img3grab = randomizer();
+  while (indexArray.length < 6) {
+    let num = randomizer();
+    while (indexArray.includes(num)) {
+      num = randomizer();
+    }
+    indexArray.push(num);
   }
+  console.log(indexArray);
+  let img1grab = indexArray.shift();
+  let img2grab = indexArray.shift();
+  let img3grab = indexArray.shift();
+
   //Image Selector For Display
   img1.src = itemStorage[img1grab].img;
   img2.src = itemStorage[img2grab].img;
@@ -42,6 +47,70 @@ function itemrender(){
   img3.alt = itemStorage[img3grab].name;
 
 }
+//!REPEAT PREVENTION LOGIC//
+
+
+
+
+//!!CHART LOGIC//
+
+//**Logic for Chart Labels *//
+
+function chartRender() {
+
+
+  let objnames = [];
+  let objvotes = [];
+  let objviews = [];
+
+  for (let i = 0; i < itemStorage.length; i++) {
+    objnames.push(itemStorage[i].name);
+    objvotes.push(itemStorage[i].clicks);
+    objviews.push(itemStorage[i].views);
+  }
+
+  let makeChart = document.getElementById('voteres').getContext('2d');
+  let chartItem = {
+    // Vote Properties//
+    type: 'bar',
+    data: {
+      labels: objnames,
+      datasets: [{
+        data: objvotes,
+        label: 'Times Voted',
+        backgroundColor: [
+          'orange'
+        ],
+        borderColor: [
+          'black'
+        ],
+        borderWidth: 5
+      },
+      // View Properties//
+      {
+        data: objviews,
+        label: 'Times Viewed',
+        backgroundColor: [
+          'red'
+        ],
+        borderColor: [
+          'black'
+        ],
+        borderWidth: 5
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+  //Chart Constructor//
+
+  new Chart(makeChart, chartItem);
+}
 
 //!!COMPUTATIONAL LOGIC SECTION//
 
@@ -51,10 +120,9 @@ function randomizer() {
   return Math.floor(Math.random() * itemStorage.length);
 }
 
-// **Object Maker**//
+// **Object Definer**//
 
 function Item(name, fileExtension = 'jpg') {
-
   this.name = name;
   this.img = `img/${name}.${fileExtension}`;
   this.views = 0;
@@ -80,7 +148,8 @@ function clicklogic(event) {
   itemrender();
   if (votes === 0) {
     itemDisplay.removeEventListener('click', clicklogic);
-    resultslogic();
+    // resultslogic();
+    chartRender();
   }
 }
 
@@ -109,16 +178,16 @@ new Item('wine-glass');
 
 // !!Results Logic//
 
-function resultslogic() {
-  if (votes === 0); {
-    for (let i = 0; i < itemStorage.length; i++){
-      let LiLM = document.createElement('li');
-      LiLM.textContent = `${itemStorage[i].name} was viewed: ${itemStorage[i].views} and clicked: ${itemStorage[i].clicks}`;
-      resultsBtn.appendChild(LiLM);
-    }
-    resultsBtn.removeEventListener('click',resultslogic);
-  }
-}
+// function resultslogic() {
+//   if (votes === 0); {
+//     for (let i = 0; i < itemStorage.length; i++) {
+//       let LiLM = document.createElement('li');
+//       LiLM.textContent = `${itemStorage[i].name} was viewed: ${itemStorage[i].views} and clicked: ${itemStorage[i].clicks}`;
+//       resultsBtn.appendChild(LiLM);
+//     }
+//     resultsBtn.removeEventListener('click', resultslogic);
+//   }
+
 
 
 //!!INTIALIZE
