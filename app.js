@@ -15,7 +15,13 @@ let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 let resultsBtn = document.getElementById('itempick');
 
+
+
+
 //!! RENDER LOGIC!!//
+
+
+//!REPEAT PREVENTION LOGIC//
 
 function itemrender() {
   console.log('test');
@@ -47,8 +53,10 @@ function itemrender() {
   img3.alt = itemStorage[img3grab].name;
 
 }
-//!REPEAT PREVENTION LOGIC//
 
+//! LOCAL Storage Contiuned//
+let retrieveddata = localStorage.getItem('');
+console.log();
 
 
 
@@ -141,17 +149,32 @@ function clicklogic(event) {
   for (let i = 0; i < itemStorage.length; i++) {
     if (itemStorage[i].name === imgselect) {
       itemStorage[i].clicks++;
-    }
-  }
+  
   votes--;
 
   itemrender();
+    }
+  }
+  function finalRes(){
   if (votes === 0) {
     itemDisplay.removeEventListener('click', clicklogic);
     // resultslogic();
     chartRender();
+
+    //!Local Data Storage Starts Here//
+    let stringObjects = JSON.stringify(itemStorage);
+
+    console.log('strings >>', stringObjects);
+
+    localStorage.setItem('my object', stringObjects);
   }
 }
+
+
+
+
+
+
 
 
 //**Item Creator**//
@@ -197,4 +220,5 @@ itemrender();
 
 
 itemDisplay.addEventListener('click', clicklogic);
-resultsBtn.addEventListener('click', resultslogic);
+resultsBtn.addEventListener('click', finalRes);
+
