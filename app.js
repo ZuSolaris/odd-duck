@@ -13,7 +13,7 @@ let itemDisplay = document.getElementById('itemDisplay');
 let img1 = document.getElementById('img1');
 let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
-let resultsBtn = document.getElementById('itempick');
+// let resultsBtn = document.getElementById('itempick');
 
 
 

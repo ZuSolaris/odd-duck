@@ -8,6 +8,7 @@ This is a website on about a Salmon Cookie sales, one is a homepage, while the o
 ### Author: Zoe Gonzalez
 
 ### Resources
+
 math.random() help from:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
@@ -17,8 +18,10 @@ https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp
 
 
 ### Images
+
 Images provided by code fellows!
 
+https://www.publicdomainpictures.net/en/view-image.php?image=28953&picture=sunset-15
 
 ### Reflections
 
