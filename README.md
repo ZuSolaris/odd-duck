@@ -1,9 +1,9 @@
 
-# Lab 12
+# Lab 14
 
-## Salmon Cookies Website
+## Odd Ducks Voting Tool
 
-This is a website on about a Salmon Cookie sales, one is a homepage, while the other is a sales data page showing average sales during the day.
+This is a website created for a company called Odd-Ducks, I take user data and save it to local data it allows data to remain after a page refresh. 
 
 ### Author: Zoe Gonzalez
 
@@ -11,9 +11,6 @@ This is a website on about a Salmon Cookie sales, one is a homepage, while the o
 
 math.random() help from:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-
-
-https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp
 
 
 
@@ -25,4 +22,4 @@ https://www.publicdomainpictures.net/en/view-image.php?image=28953&picture=sunse
 
 ### Reflections
 
-A data heavy projects that use data to figure out an average users most favorable product.
+A data heavy project that use data to figure out an average users most favorable product. This code was very javascript heavy and the algorithim solving was definitely a challenge however I enjoyed those days looking back at it now. 
